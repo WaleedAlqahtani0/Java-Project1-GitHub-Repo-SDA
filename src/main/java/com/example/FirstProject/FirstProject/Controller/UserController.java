@@ -2,7 +2,6 @@ package com.example.FirstProject.FirstProject.Controller;
 
 import com.example.FirstProject.FirstProject.Entity.User;
 import com.example.FirstProject.FirstProject.Service.Implementation.UserImp;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

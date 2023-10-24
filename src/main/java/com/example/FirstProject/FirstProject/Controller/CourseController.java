@@ -54,8 +54,8 @@ public class CourseController {
 
 ////////////////
 
-    @PutMapping("/courses/update/{id}")
-    public String updateCourse(@PathVariable String courseId, @RequestBody Course course){
+    @PutMapping("/courses/update")
+    public String updateCourse(@RequestParam String courseId, @RequestBody Course course){
         return courseImp.updateCourse(courseId,course);
     }
 
