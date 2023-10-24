@@ -46,7 +46,7 @@ public class StudentImp implements StudentService {
        ---------delete a Student to the database
        */
     @Override
-    public void deleteStudent(Integer student) {
+    public void deleteStudent(int student) {
         studentRepository.deleteById(student);
     }
 
