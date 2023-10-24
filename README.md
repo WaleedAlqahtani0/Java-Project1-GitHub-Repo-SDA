@@ -1,1 +1,1 @@
-# java-project1-github-repo-sda
+# School-Mangament-System
