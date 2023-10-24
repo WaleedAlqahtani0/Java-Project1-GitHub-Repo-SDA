@@ -5,31 +5,51 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+/*
+
+       Teacher entity extends User
+
+     */
 
 @Entity
-@Table(name = "Student")
+@Table(name = "tbl_student")
 public class Student extends User {
 
     private String major;
 
+
+ /*---------------------
+     @ManyToOne relationship between Many Student to One Teacher
+   */
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+
+    /*---------------------
+     @ManyToOne relationship between Many Student to One Course
+   */
 
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
+
+    /*---------------------
+     @OneToOne relationship between One Student to One Grade
+   */
     @OneToOne
     @JoinColumn(name = "grade_id")
     private Grade grade;
 
 
+    /*---------------------
+     @ManyToOne relationship between Many Student to One Section
+   */
     @ManyToOne
     @JoinColumn( name = "section_id")
     private Section section;
 
-
+    //---------- super constructor with private attribute and Getter,Setter and toString;
 
     public Student() {
     }

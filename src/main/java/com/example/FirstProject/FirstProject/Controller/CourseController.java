@@ -33,7 +33,7 @@ public class CourseController {
     //////////////
 
     @PostMapping("/courses/add")
-    public ResponseEntity<String> addCourse(@RequestBody Course course) {
+    public ResponseEntity<String> addCourse(@RequestBody @Valid Course course) {
         try {
             courseImp.addCourse(course);
             String massage = "Course add successfully";

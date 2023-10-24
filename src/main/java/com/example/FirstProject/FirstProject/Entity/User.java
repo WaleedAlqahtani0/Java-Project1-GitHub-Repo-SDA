@@ -1,25 +1,39 @@
 package com.example.FirstProject.FirstProject.Entity;
 
 import jakarta.persistence.*;
-import org.springframework.context.annotation.Configuration;
-
+import jakarta.validation.constraints.NotEmpty;
 import java.util.Objects;
 
-@Entity
-@Table(name = "user")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+/*
 
+   User Entity it's Parent Class for three subclass: Teacher,Student,Admin classes.
+   I used @Inheritance for subclass
+
+ */
+
+    @Entity
+    @Table(name = "tbl_user")
+    @Inheritance(strategy = InheritanceType.JOINED)
+    public class User {
+
+    // --------- Primary key (id) generated automatically by the database
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+
+    //----------- name attribute with valid and make it unique name
+    @Column(unique = true)
     private String name;
 
+    //----------- attribute
     private String email;
 
+    //-----------  attribute
     private String password;
 
+
+    //---------- constructors, getters, setters, equals, hashCode and toString;
 
     public User() { }
 

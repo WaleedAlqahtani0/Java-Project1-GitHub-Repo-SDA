@@ -8,30 +8,54 @@ import jakarta.persistence.OneToOne;
 import java.util.Objects;
 import java.util.Set;
 
+    /*
+
+       Grade entity extends User
+
+     */
 @Entity
 public class Grade {
 
+    // --------- Primary key (id) generated automatically by the database
     @Id
     private int id;
 
+
+    // attributes
     private String studentName;
 
     private int score;
 
+
+    /*---------------------
+    @OneToOne relationship between One Grade to One student
+  */
     @OneToOne (mappedBy = "grade")
     private Student student;
 
+    /*---------------------
+    @OneToOne relationship between Grade to One teacher
+  */
     @OneToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
 
+    //---------- constructors, getters, setters, equals, hashCode and toString;
     public Grade() { }
 
     public Grade(int id, String studentName, int score) {
         this.id = id;
         this.studentName = studentName;
         this.score = score;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public int getId() {

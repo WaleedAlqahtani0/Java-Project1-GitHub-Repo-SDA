@@ -1,29 +1,50 @@
 package com.example.FirstProject.FirstProject.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "Course")
-public class Course {
 
+    /*
+
+       Course entity extends User
+
+     */
+    @Entity
+    @Table(name = "Course")
+    public class Course {
+
+        // --------- Primary key (courseId) generated automatically by the database
     @Id
     private String courseId;
 
-    private String courseName;
 
+     //------ attribute
+     @NotEmpty(message = " Not Found ")
+     private String courseName;
+
+        /*---------------------
+          @OneToMany relationship between One course to Many Student
+          */
     @OneToMany(mappedBy = "course")
     private Set<Student> student;
 
+        /*---------------------
+          @OneToMany relationship between One course to One teacher
+          */
     @OneToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+        /*---------------------
+          @OneToMany relationship between One course to Many section
+          */
     @OneToMany(mappedBy = "course")
     private Set<Section> section;
 
+        //---------- constructor and Getter,Setter,equals,hashCode and toString
     public Course() {
     }
 

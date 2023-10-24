@@ -10,29 +10,49 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+    /*
+     GradeImp implements TeacherService
+   */
 
+@Service
 public class GradeImp implements GradeService {
 
+    /*
+      -------- Autowired GradeRepository for database operations.
+     */
     @Autowired
     private GradeRepository gradeRepository;
 
+/*
+     ------ get all the Grade by findAll()
+     */
 
     @Override
     public List<Grade> getAllGrade() {
         return gradeRepository.findAll();
     }
 
+    /*
+       ---------add a new Grade to the database
+       */
     @Override
     public Grade addGrade(Grade grade) {
         return gradeRepository.save(grade);
     }
 
+    /*
+       ---------delete a Grade to the database
+       */
     @Override
     public void deleteGrade(Integer grade) {
    gradeRepository.deleteById(grade);
     }
 
+
+    /*
+       --------- Update a Grade to the database and check if the Grade not found give a massage
+       --------- I used if else inside try-catch to if there is exceptions.
+      */
     @Override
     public String UpdateGrade(int id, Grade grade) {
         Optional<Grade> gradeFound = gradeRepository.findById(id);
