@@ -2,6 +2,7 @@ package com.example.FirstProject.FirstProject.Controller;
 
 
 import com.example.FirstProject.FirstProject.Entity.Section;
+import com.example.FirstProject.FirstProject.Entity.Student;
 import com.example.FirstProject.FirstProject.Entity.User;
 import com.example.FirstProject.FirstProject.Repository.SectionRepository;
 import com.example.FirstProject.FirstProject.Service.Implementation.SectionImp;
@@ -12,8 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-    /*
+/*
      * REST API for User
      */
 @RestController
@@ -63,17 +65,27 @@ public class SectionController {
          - Delete sections with handling Exception
         */
     @DeleteMapping("/sections/delete/{id}")
-    public String deleteUsers(@PathVariable int id){
-        sectionImp.deleteSection(id);
-        return "Section deleted";
+    public String deleteSection(@PathVariable int id){
+        Optional<Section> SectionFound = sectionRepository.findById(id);
+        try {
+            if (SectionFound.isPresent()) {
+                sectionImp.deleteSection(id);
+                return "Section id deleted";
+            } else {
+                return "Section with user id " + id + " not found";
+            }
+        } catch (Exception e) {
+            return "Section not deleted";
+        }
     }
+
 
     /*----------------------
       - Update sections and I did the Exception in sectionImp class
      */
 
     @PutMapping("/sections/update/{id}")
-    public String updateUsers(@PathVariable Integer id, @RequestBody Section section){
+    public String updateSection(@PathVariable Integer id, @RequestBody Section section){
         return sectionImp.UpdateSection(id,section);
     }
 

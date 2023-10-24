@@ -2,7 +2,9 @@ package com.example.FirstProject.FirstProject.Controller;
 
 
 import com.example.FirstProject.FirstProject.Entity.Grade;
+import com.example.FirstProject.FirstProject.Entity.Student;
 import com.example.FirstProject.FirstProject.Entity.User;
+import com.example.FirstProject.FirstProject.Repository.GradeRepository;
 import com.example.FirstProject.FirstProject.Service.Implementation.GradeImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,15 +12,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+
+    /*
+     * REST API for User
+     */
 @RestController
 public class GradeController {
 
+        /*
+      -------- Autowired GradeImp,GradeRepository for accessing user data
+           */
     @Autowired
     private GradeImp gradeImp;
 
+    private GradeRepository gradeRepository;
 
-    ////////// GET
+
+     /*--------------------
+       - Get a list of all grade
+       - return list of all grade
+      */
 
     @GetMapping("/grades")
     @ResponseStatus(HttpStatus.OK)
@@ -26,7 +41,12 @@ public class GradeController {
         return gradeImp.getAllGrade();
     }
 
-    /////////// Post
+     /*------------------
+          - add a new grade
+          - @RequestBody the grade to be saved
+          - @Valid to validation
+          - I used try-catch to check there is not give anu error or Exception when added
+            */
 
     @PostMapping("/grades/add")
     public ResponseEntity<String> addGrade(@RequestBody Grade grade) {
@@ -40,15 +60,29 @@ public class GradeController {
         }
     }
 
-    ///////////// DELETE
+   /*----------------------
+         - Delete grade with handling Exception
+        */
 
     @DeleteMapping("/grades/delete/{id}")
     public String deleteGrade(@PathVariable int id){
-        gradeImp.deleteGrade(id);
-        return "Grade deleted";
+        Optional<Grade> GradeFound = gradeRepository.findById(id);
+        try {
+            if (GradeFound.isPresent()) {
+                gradeImp.deleteGrade(id);
+                return "Grade id deleted";
+            } else {
+                return "Grade with user id " + id + " not found";
+            }
+        } catch (Exception e) {
+            return "Grade not deleted";
+        }
     }
 
-    ///////// UPDATE
+
+     /*----------------------
+      - Update grade and I did the Exception in gradeImp class
+     */
 
 
     @PutMapping("/grades/update/{id}")

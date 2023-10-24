@@ -1,6 +1,8 @@
 package com.example.FirstProject.FirstProject.Controller;
 
 import com.example.FirstProject.FirstProject.Entity.Course;
+import com.example.FirstProject.FirstProject.Entity.Student;
+import com.example.FirstProject.FirstProject.Repository.CourseRepository;
 import com.example.FirstProject.FirstProject.Service.Implementation.CourseImp;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,20 +11,29 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+    /*
+     * REST API for User
+     */
 @RestController
 public class CourseController {
 
+    /*
+         -------- Autowired CourseImp,CourseRepository for accessing user data
+       */
     @Autowired
     private CourseImp courseImp;
 
-    @GetMapping("/welcome/courses")
-    public String HelloCourses(){
-        return "Welcome to Courses";
-    }
+    @Autowired
+    private CourseRepository courseRepository;
 
 
-    //////////
+        /*--------------------
+           - Get a list of all Courses
+           - return list of all Courses
+          */
+
     @GetMapping("/courses")
     @ResponseStatus(HttpStatus.OK)
     public List<Course> getAllCourses() {
@@ -30,8 +41,12 @@ public class CourseController {
     }
 
 
-    //////////////
-
+        /*------------------
+             - add a new Course
+             - @RequestBody  the Course to be saved
+             - @Valid to validation
+             - I used try-catch to check there is not give an error or Exception when added
+               */
     @PostMapping("/courses/add")
     public ResponseEntity<String> addCourse(@RequestBody @Valid Course course) {
         try {
@@ -44,15 +59,30 @@ public class CourseController {
         }
     }
 
-    //////////////
+   /*----------------------
+         - Delete Course with handling Exception
+        */
 
     @DeleteMapping("/courses/delete")
     public String deleteCourse(@RequestParam String courseId){
-        courseImp.deleteCourse(courseId);
-        return "course deleted";
-    }
+            Optional<Course> CourseFound = courseRepository.findById(courseId);
+            try {
+                if (CourseFound .isPresent()) {
+                    courseImp.deleteCourse(courseId);
+                    return "Course id deleted";
+                } else {
+                    return "Course with user id " + courseId + " not found";
+                }
+            } catch (Exception e) {
+                return "Course not deleted";
+            }
+        }
 
-////////////////
+
+ /*----------------------
+      - Update Course and I did the Exception in CourseImp class
+     */
+
 
     @PutMapping("/courses/update")
     public String updateCourse(@RequestParam String courseId, @RequestBody Course course){
