@@ -22,7 +22,6 @@ import java.util.Set;
 
 
      //------ attribute
-     @NotEmpty(message = " Not Found ")
      private String courseName;
 
         /*---------------------
