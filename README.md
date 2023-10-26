@@ -6,7 +6,7 @@
 The School Management System is a comprehensive software solution designed to streamline and improve the administration of educational institutions. It provides a range of features for managing users, students, teachers, sections, courses, and grading. making it easier for schools to maintain organized and efficient operations.
 
 ## Class Diagram
-![Logo](https://imgg.io/image/868wJ)
+![Class diagram](school_management_system.png)
 
 ## Setup
 csc
