@@ -1,50 +1,52 @@
 package com.example.FirstProject.FirstProject.Controller;
 
+import com.example.FirstProject.FirstProject.Entity.Grade;
 import com.example.FirstProject.FirstProject.Entity.User;
+import com.example.FirstProject.FirstProject.Repository.GradeRepository;
 import com.example.FirstProject.FirstProject.Repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /*
 
- Testing with MocMcv / UserRepositoryTest
+ Testing with MocMcv / GradeControllerTest
 
  All The tests it's work I did try
 
  */
-@SpringBootTest
-class UserControllerTest{
+public class GradeControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
     @Autowired
-    private UserRepository userRepository;
+    private GradeRepository gradeRepository;
     private MockMvc mockMvc;
 
 
     /*
 
-     insert/add users
+     insert/add grade
 
      */
     @Test
     public void setup(){
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        User user1 = new User("Waleed","w@gmail.com","w000");
-        User user2 = new User("nawaf","n@gmail.com","n123");
-        userRepository.saveAll(List.of(user1,user2));
+        Grade grade1 = new Grade(1,"name1",99);
+        Grade grade2 = new Grade(2,"name2",88);
+        gradeRepository.saveAll(List.of(grade1,grade2));
     }
 
     /*
@@ -54,24 +56,26 @@ class UserControllerTest{
      */
 
     @Test
-    void getAllUsersTest() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/users"))
+    void getAllGradeTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/grades"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("Waleed"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("nawaf"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("name1"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("name2"));
     }
 
-/*
+    /*
 
-    MocMvc testing using: Delete
+        MocMvc testing using: Delete
 
- */
+     */
     @Test
-    void deleteUserTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/delete/1"))
+    void deleteGradeTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/grades/delete/1"))
                 .andExpect(status().isNoContent());
     }
 
 }
+
+
